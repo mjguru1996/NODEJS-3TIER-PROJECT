@@ -18,9 +18,12 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Backend Scan') {
             steps {
-                echo 'Deploying...'
+                echo 'Scanning backend...'
+                dir('api') {
+                sh 'find . -name "*.js" -exec node --check {} +'
+                }
             }
         }
     }
