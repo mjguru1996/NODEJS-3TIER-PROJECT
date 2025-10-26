@@ -10,9 +10,12 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/mjguru1996/Shack.git'
             }
         }
-        stage('Test') {
+        stage('Frontend Scan') {
             steps {
-                echo 'Testing...'
+                echo 'Scanning frontend...'
+                dir('client') {
+                sh 'find . -name "*.js" -exec node --check {} +'
+                }
             }
         }
         stage('Deploy') {
