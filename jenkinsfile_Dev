@@ -7,15 +7,15 @@ pipeline {
                 git branch: 'dev', url: 'https://github.com/mjguru1996/Shack.git'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         echo 'Testing...'
+        //     }
+        // }
+        // stage('Deploy') {
+        //     steps {
+        //         echo 'Deploying...'
+        //     }
+        // }
     }
     }
