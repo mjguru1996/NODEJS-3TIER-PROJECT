@@ -26,5 +26,11 @@ pipeline {
                 }
             }
         }
+        stage('Gitleaks Scan') {
+            steps {
+                echo 'Running Gitleaks scan...'
+                sh 'gitleaks detect --source ./client --exit-code 1'
+                sh 'gitleaks detect --source ./api --exit-code 1'
+            }
     }
     }
