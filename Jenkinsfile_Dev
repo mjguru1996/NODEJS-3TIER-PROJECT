@@ -14,25 +14,22 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/mjguru1996/Shack.git'
             }
         }
-        stage('Vulnerability Scan') {
+        stage('Frontend Scan') {
             steps {
                 echo 'Scanning frontend...'
                 dir('client') {
                 sh 'find . -name "*.js" -exec node --check {} +'
+                }
+            }
+        }
+        stage('Backend Scan') {
+            steps {
                 echo 'Scanning backend...'
                 dir('api') {
                 sh 'find . -name "*.js" -exec node --check {} +'
                 }
             }
         }
-        // stage('Backend Scan') {
-        //     steps {
-        //         echo 'Scanning backend...'
-        //         dir('api') {
-        //         sh 'find . -name "*.js" -exec node --check {} +'
-        //         }
-        //     }
-        // }
         stage('Gitleaks Scan') {
             steps {
                 echo 'Running Gitleaks scan...'
@@ -92,5 +89,4 @@ pipeline {
             }
         }
     }
-}
 }
