@@ -41,11 +41,18 @@ pipeline {
             steps {
                 echo 'Running Sonarqube analysis...'
                 withSonarQubeEnv('sonar') {
-                    // run sonar-scanner; avoid embedded single-quotes that break Groovy parsing
                     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \
                     -Dsonar.projectKey=NODEJS-Project'''
                 }
             }
         }
+        stage('Quality Gate Validation') {
+            steps {
+                echo 'Running Sonarqube quality gate validation...'
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                }
+                }
+            }
+        }
     }
-}
