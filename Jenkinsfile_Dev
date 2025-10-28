@@ -4,6 +4,10 @@ pipeline {
     tools {    
         nodejs 'nodejs'
     }
+    
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+    }
     stages{
         stage('GIT Checkout') {
             steps {
@@ -36,8 +40,8 @@ pipeline {
         stage('Sonarqube Analysis') {
             steps {
                 echo 'Running Sonarqube analysis...'
-                withSonarQubeEnv(credentialsId: 'sonar-token') {
-                    sh 'sonar-scanner -Dsonar.projectKey=Shack -Dsonar.sources=client,api'
+                withSonarQubeEnv('sonar') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \ -Dsonar.projectKey='NODEJS-Project '''
                 }
             }
         }
