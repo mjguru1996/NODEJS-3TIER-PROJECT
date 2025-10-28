@@ -67,7 +67,7 @@ pipeline {
                     // This step should not normally be used in your script. Consult the inline help for details.
                     withDockerRegistry(credentialsId: 'docker-cred') {
                         dir('api') {
-                            sh 'docker build -t guruprasadkannan/backend:latest'
+                            sh 'DOCKER_BUILDKIT=1 docker build -t guruprasadkannan/backend:latest .'
                             sh 'trivy image --format table -o backend-image-report.html guruprasadkannan/backend:latest'
                             sh 'docker push guruprasadkannan/backend:latest'                           
                     }
@@ -82,7 +82,7 @@ pipeline {
                     // This step should not normally be used in your script. Consult the inline help for details.
                     withDockerRegistry(credentialsId: 'docker-cred') {
                         dir('client') {
-                            sh 'docker build -t guruprasadkannan/frontend:latest'
+                            sh 'DOCKER_BUILDKIT=1 docker build -t guruprasadkannan/frontend:latest .'
                             sh 'trivy image --format table -o frontend-image-report.html guruprasadkannan/frontend:latest'
                             sh 'docker push guruprasadkannan/frontend:latest'                          
                     }
