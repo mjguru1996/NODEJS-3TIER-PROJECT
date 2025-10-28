@@ -41,7 +41,8 @@ pipeline {
             steps {
                 echo 'Running Sonarqube analysis...'
                 withSonarQubeEnv('sonar') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \ -Dsonar.projectKey='NODEJS-Project '''
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \ 
+                    -Dsonar.projectKey='NODEJS-Project '''
                 }
             }
         }
