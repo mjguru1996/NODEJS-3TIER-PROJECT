@@ -119,34 +119,10 @@ pipeline {
         }
         stage('Docker Deployment via Compose') {
             steps {
-                script {
-                    // Check Docker Compose version and use appropriate command
-                    sh '''
-                        # Stop any existing containers
-                        docker-compose down || true
-                        
-                        # Remove volumes to ensure clean state
-                        docker volume rm shack_mysql-data || true
-                        
-                        # Start the stack in detached mode
-                        docker-compose up -d
-                        
-                        # Wait for MySQL to be ready
-                        echo "Waiting for MySQL to be ready..."
-                        for i in $(seq 1 60); do
-                            if docker exec mysql mysqladmin ping -h localhost -u root -pAditya --silent; then
-                                echo "MySQL is ready"
-                                break
-                            fi
-                            echo "Waiting for MySQL... $i"
-                            sleep 5
-                        done
-                        
-                        # Check if services are running
-                        docker-compose ps
-                    '''
+                script{
+                    sh 'docker-compose up -d'
                 }
             }
-        }
+    }
 }
 }
