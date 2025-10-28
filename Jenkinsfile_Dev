@@ -33,5 +33,13 @@ pipeline {
                 sh 'gitleaks detect --source ./api --exit-code 1'
             }
     }
+        stage('Sonarqube Analysis') {
+            steps {
+                echo 'Running Sonarqube analysis...'
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                    sh 'sonar-scanner -Dsonar.projectKey=Shack -Dsonar.sources=client,api'
+                }
+            }
+        }
     }
 }
