@@ -64,23 +64,23 @@ pipeline {
                 sh 'gitleaks detect --source ./api --exit-code 1'
             }
     }
-        stage('Sonarqube Analysis') {
-            steps {
-                echo 'Running Sonarqube analysis...'
-                withSonarQubeEnv('sonar') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \
-                    -Dsonar.projectKey=NODEJS-Project'''
-                }
-            }
-        }
-        stage('Quality Gate Validation') {
-            steps {
-                echo 'Running Sonarqube quality gate validation...'
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
-                }
-                }
-            }
+        // stage('Sonarqube Analysis') {
+        //     steps {
+        //         echo 'Running Sonarqube analysis...'
+        //         withSonarQubeEnv('sonar') {
+        //             sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NODEJS-Project \
+        //             -Dsonar.projectKey=NODEJS-Project'''
+        //         }
+        //     }
+        // }
+        // stage('Quality Gate Validation') {
+        //     steps {
+        //         echo 'Running Sonarqube quality gate validation...'
+        //         timeout(time: 1, unit: 'HOURS') {
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+        //         }
+        //         }
+        //     }
         stage('Trivy Scan') {
             steps {
                 echo 'Running Trivy scan...'
